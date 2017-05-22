@@ -30,11 +30,14 @@
  *
  ****************************************************************************/
 #pragma once
+#include <mutex>
+
+#include <ros/ros.h>
+#include "sensor_msgs/Imu.h"
+
 #include "SnapdragonCameraTypes.hpp"
 #include "mvVISLAM.h"
 #include "SnapdragonCameraManager.hpp"
-#include "SnapdragonImuManager.hpp"
-#include <mutex>
 
 namespace Snapdragon {
   class VislamManager;
@@ -43,7 +46,7 @@ namespace Snapdragon {
 /**
  * Class to wrap the mvVISLAM SDK with Camera and IMU Samples.
  */
-class Snapdragon::VislamManager : public Snapdragon::Imu_IEventListener {
+class Snapdragon::VislamManager{
 public:
 
   /**
@@ -159,7 +162,9 @@ public:
    *  0 = success;
    * otherwise = false;
    **/
-  int32_t Imu_IEventListener_ProcessSamples( sensor_imu* samples, uint32_t count );
+  // int32_t Imu_IEventListener_ProcessSamples( sensor_imu* samples, uint32_t count );
+  
+  void callback_imu(const sensor_msgs::Imu::ConstPtr& msg);
 
   /**
    * Destructor
@@ -174,9 +179,11 @@ private:
   Snapdragon::VislamManager::InitParams vislam_params_;
   bool                          verbose_;
   Snapdragon::CameraManager*    cam_man_ptr_;
-  Snapdragon::ImuManager*       imu_man_ptr_;
+  // Snapdragon::ImuManager*       imu_man_ptr_;
   mvVISLAM*                     vislam_ptr_;
   std::mutex                    sync_mutex_;
   uint8_t*                      image_buffer_;
   size_t                        image_buffer_size_bytes_;
+  
+  // ros::Subscriber imu_sub_;
 };
