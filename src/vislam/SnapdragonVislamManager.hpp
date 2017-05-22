@@ -34,7 +34,9 @@
 #include <atomic>         // std::atomic
 
 #include <ros/ros.h>
-#include "sensor_msgs/Imu.h"
+#include <sensor_msgs/Imu.h>
+#include <geometry_msgs/Vector3.h>
+#include <geometry_msgs/Quaternion.h>
 
 #include "SnapdragonCameraTypes.hpp"
 #include "mvVISLAM.h"
@@ -165,7 +167,6 @@ public:
    **/
   // int32_t Imu_IEventListener_ProcessSamples( sensor_imu* samples, uint32_t count );
   
-  void callback_imu(const sensor_msgs::Imu::ConstPtr& msg);
 
   /**
    * Destructor
@@ -174,6 +175,7 @@ public:
 
 private:
   // utility methods 
+  void ImuCallback(const sensor_msgs::Imu::ConstPtr& msg);
   int32_t CleanUp();
   std::atomic<bool> initialized_;
   Snapdragon::CameraParameters          cam_params_;
@@ -186,5 +188,5 @@ private:
   uint8_t*                      image_buffer_;
   size_t                        image_buffer_size_bytes_;
   
-  // ros::Subscriber imu_sub_;
+  ros::Subscriber imu_sub_;
 };
