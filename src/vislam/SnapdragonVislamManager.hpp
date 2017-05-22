@@ -31,6 +31,7 @@
  ****************************************************************************/
 #pragma once
 #include <mutex>
+#include <atomic>         // std::atomic
 
 #include <ros/ros.h>
 #include "sensor_msgs/Imu.h"
@@ -78,7 +79,7 @@ public:
   /**
    * Constructor
    **/
-  VislamManager();
+  VislamManager(ros::NodeHandle nh);
 
   /**
    * Initalizes the VISLAM Manager with Camera and VISLAM Parameters
