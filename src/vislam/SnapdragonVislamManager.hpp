@@ -188,5 +188,6 @@ private:
   uint8_t*                      image_buffer_;
   size_t                        image_buffer_size_bytes_;
   
+  ros::NodeHandle nh_;
   ros::Subscriber imu_sub_;
 };
