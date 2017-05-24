@@ -154,29 +154,18 @@ public:
    * otherwise = false;
    **/
   int32_t Reset();
-
-  /**
-   * The IMU callback handler to add the accel/gyro data into VISLAM.
-   * @param samples
-   *  The imu Samples to be added to VISLAM.
-   * @param count
-   *  The number of samples in the buffer.
-   * @return int32_t
-   *  0 = success;
-   * otherwise = false;
-   **/
-  // int32_t Imu_IEventListener_ProcessSamples( sensor_imu* samples, uint32_t count );
   
-
   /**
    * Destructor
    */
   virtual ~VislamManager();
 
-private:
-  // utility methods 
+private: 
   void ImuCallback(const sensor_msgs::Imu::ConstPtr& msg);
+  
+  // utility methods
   int32_t CleanUp();
+  
   std::atomic<bool> initialized_;
   Snapdragon::CameraParameters          cam_params_;
   Snapdragon::VislamManager::InitParams vislam_params_;
